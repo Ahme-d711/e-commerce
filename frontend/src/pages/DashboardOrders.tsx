@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { motion, easeOut } from 'framer-motion';
-import { Eye, Package, CheckCircle, XCircle, Clock, Truck, DollarSign } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { useGetAllOrders, useGetOrderStats } from '../server/orderService';
 import { useOrderStore } from '../store/OrderStore';
 import dayjs from "dayjs";
-import type { OrderStatus } from '../types/orderType/orderTypes';
-import { useMutation } from '@tanstack/react-query';
-import api from '../lib/api';
+import { useAuthStore } from '../store/AuthStore';
 
 const tableVariants = {
   hidden: { opacity: 0, y: 12 },
@@ -18,89 +16,20 @@ const rowVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: easeOut } },
 };
 
-type StatusConfigEntry = {
-  label: string;
-  color: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
-
-const statusConfig: Record<OrderStatus, StatusConfigEntry> = {
-  pending: { 
-    label: 'Pending', 
-    color: 'text-yellow-600 bg-yellow-100', 
-    icon: Clock 
-  },
-  paid: { 
-    label: 'Paid', 
-    color: 'text-blue-600 bg-blue-100', 
-    icon: DollarSign 
-  },
-  processing: { 
-    label: 'Processing', 
-    color: 'text-purple-600 bg-purple-100', 
-    icon: Package 
-  },
-  shipped: { 
-    label: 'Shipped', 
-    color: 'text-indigo-600 bg-indigo-100', 
-    icon: Truck 
-  },
-  delivered: { 
-    label: 'Delivered', 
-    color: 'text-green-600 bg-green-100', 
-    icon: CheckCircle 
-  },
-  cancelled: { 
-    label: 'Cancelled', 
-    color: 'text-red-600 bg-red-100', 
-    icon: XCircle 
-  },
-};
 
 const DashboardOrders: React.FC = () => {
   const [page, setPage] = useState(1);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const { isLoading, error, data } = useGetAllOrders(page);
   const { data: statsData, isLoading: statsLoading } = useGetOrderStats();
-  const { orders, upsertOrder } = useOrderStore();
+  const { orders } = useOrderStore();
+  useAuthStore();
   
   const items = (data?.data ?? orders ?? []);
   const total = data?.total ?? items.length;
   const totalPages = Math.max(1, Math.ceil(total / 12));
   const canPrev = page > 1;
   const canNext = page < totalPages;
-
-  const updateOrderMutation = useMutation({
-    mutationFn: async ({ orderId, status }: { orderId: string; status: OrderStatus }) => {
-      const response = await api.patch(`/orders/${orderId}`, { status });
-      return response.data;
-    },
-    onSuccess: (data) => {
-      upsertOrder(data.data);
-    },
-  });
-
-  const handleStatusUpdate = (orderId: string, newStatus: OrderStatus) => {
-    updateOrderMutation.mutate({ orderId, status: newStatus });
-  };
-
-  const getStatusBadge = (status: OrderStatus) => {
-    const config = statusConfig[status as OrderStatus];
-    if (!config) {
-      return (
-        <span className={"inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium text-[var(--color-muted-foreground)] bg-[var(--color-muted)]/20"}>
-          {String(status)}
-        </span>
-      );
-    }
-    const Icon = config.icon;
-    return (
-      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${config.color}`}>
-        <Icon className="w-3 h-3" />
-        {config.label}
-      </span>
-    );
-  };
 
   const toggleOrderDetails = (orderId: string) => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
@@ -129,14 +58,6 @@ const DashboardOrders: React.FC = () => {
           {
             label: 'Avg Order Value',
             value: `$${(statsData?.data?.overview?.averageOrderValue ?? 0).toFixed ? (statsData?.data?.overview?.averageOrderValue ?? 0).toFixed(2) : Number(statsData?.data?.overview?.averageOrderValue ?? 0).toFixed(2)}`,
-          },
-          {
-            label: 'Paid Orders',
-            value: statsData?.data?.overview?.paidOrders ?? 0,
-          },
-          {
-            label: 'Delivered',
-            value: statsData?.data?.overview?.deliveredOrders ?? 0,
           },
         ].map((card, idx) => (
           <div
@@ -173,7 +94,7 @@ const DashboardOrders: React.FC = () => {
             <thead className="text-left text-[var(--color-muted-foreground)]">
               <tr>
                 <th className="px-4 py-3">Order ID</th>
-                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Total</th>
                 <th className="px-4 py-3">Payment</th>
                 <th className="px-4 py-3">Date</th>
@@ -191,7 +112,7 @@ const DashboardOrders: React.FC = () => {
                       User ID: {order.user.slice(-8)}
                     </td> */}
                     <td className="px-4 py-3">
-                      {getStatusBadge(order.status)}
+                      {typeof order.user === 'object' ? order.user?.email : undefined}
                     </td>
                     <td className="px-4 py-3 text-[var(--color-foreground)] font-semibold">
                       ${order.totalPrice.toFixed(2)}
@@ -211,18 +132,6 @@ const DashboardOrders: React.FC = () => {
                           <Eye className="w-4 h-4" />
                           {expandedOrder === order._id ? 'Hide' : 'View'}
                         </button>
-                        <select
-                          value={order.status}
-                          onChange={(e) => handleStatusUpdate(order._id, e.target.value as OrderStatus)}
-                          className="text-xs px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-background)]"
-                          disabled={updateOrderMutation.isPending}
-                        >
-                          {Object.keys(statusConfig).map((status) => (
-                            <option key={status} value={status}>
-                              {statusConfig[status as OrderStatus].label}
-                            </option>
-                          ))}
-                        </select>
                       </div>
                     </td>
                   </motion.tr>

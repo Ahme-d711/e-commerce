@@ -37,6 +37,27 @@ const DashboardProduct: React.FC = () => {
         </Link>
       </div>
 
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {(() => {
+          const pageCount = items.length;
+          const totalProducts = total;
+          const avgPrice = pageCount ? items.reduce((sum, p) => sum + (p.price ?? 0), 0) / pageCount : 0;
+          const cards = [
+            { label: 'Total Products', value: totalProducts },
+            { label: 'Avg Price (page)', value: `$${avgPrice.toFixed(2)}` },
+          ];
+          return cards.map((card, idx) => (
+            <div key={idx} className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius-lg)] p-4">
+              <div className="text-sm text-[var(--color-muted-foreground)]">{card.label}</div>
+              <div className="mt-1 text-2xl font-semibold text-[var(--color-foreground)]">
+                {isLoading ? '—' : card.value}
+              </div>
+            </div>
+          ));
+        })()}
+      </div>
+
       {isLoading && (
         <div className="min-h-[40vh] flex items-center justify-center">
           <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="text-[var(--color-foreground)]">

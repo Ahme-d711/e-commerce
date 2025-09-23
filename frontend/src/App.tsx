@@ -15,7 +15,7 @@ import { useCurrentUserQuery } from './server/userService';
 import { useAuthStore } from './store/AuthStore';
 import EditProduct from './pages/EditProduct';
 import DashboardProduct from './pages/DashboardProduct';
-import DashboardUsers from './components/DashboardUsers';
+import DashboardUsers from './pages/DashboardUsers';
 import CartPage from './pages/CartPage';
 import DashboardOrders from './pages/DashboardOrders';
 import MyOrderPage from './pages/MyOrderPage';
@@ -25,7 +25,7 @@ const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.4, ease: 'easeOut' },
+  transition: { duration: 0.4 },
 };
 
 // Protected Route Component
@@ -59,57 +59,48 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
+// Animated Page Wrapper
+const AnimatedPage = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    variants={pageVariants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    transition={pageVariants.transition}
+  >
+    {children}
+  </motion.div>
+);
+
 const App: React.FC = () => {
   const { data, isLoading } = useCurrentUserQuery();
   const { user, setAuth } = useAuthStore();
 
   // Sync server user to zustand
   useEffect(() => {
-    if (data && data !== user) {
+    if (data && data._id !== user?._id) {
       setAuth(data);
-    } else if (!data) {
+    } else if (!data && user) {
       setAuth(null);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, setAuth]);
-  
+
   return (
     <div className="min-h-[85vh] dark">
       <Navbar />
       <AnimatePresence mode="wait">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <motion.div
-                  variants={pageVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                >
-                  <HomePage />
-                </motion.div>
-              </ProtectedRoute>
-            }
-          />
+          {/* Public Routes (No Protection) */}
+          <Route path="/" element={<AnimatedPage><HomePage /></AnimatedPage>} />
 
           <Route
             path="/signup"
             element={
               !user && !isLoading ? (
-                <motion.div
-                  variants={pageVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                >
-                  <SignupPage />
-                </motion.div>
+                <AnimatedPage><SignupPage /></AnimatedPage>
               ) : (
-                <Navigate to="/" replace />
+                <Navigate to="/dashboard" replace />
               )
             }
           />
@@ -118,34 +109,19 @@ const App: React.FC = () => {
             path="/login"
             element={
               !user && !isLoading ? (
-                <motion.div
-                  variants={pageVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                >
-                  <LoginPage />
-                </motion.div>
+                <AnimatedPage><LoginPage /></AnimatedPage>
               ) : (
-                <Navigate to="/" replace />
+                <Navigate to="/dashboard" replace />
               )
             }
           />
 
+          {/* Protected Routes */}
           <Route
             path="/profile"
             element={
               <ProtectedRoute>
-                <motion.div
-                  variants={pageVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                >
-                  <ProfilePage />
-                </motion.div>
+                <AnimatedPage><ProfilePage /></AnimatedPage>
               </ProtectedRoute>
             }
           />
@@ -154,15 +130,7 @@ const App: React.FC = () => {
             path="/products"
             element={
               <ProtectedRoute>
-                <motion.div
-                  variants={pageVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                >
-                  <ProductsPage />
-                </motion.div>
+                <AnimatedPage><ProductsPage /></AnimatedPage>
               </ProtectedRoute>
             }
           />
@@ -171,36 +139,25 @@ const App: React.FC = () => {
             path="/products/create-product"
             element={
               <ProtectedRoute>
-                <motion.div
-                  variants={pageVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                >
-                  <CreateProduct />
-                </motion.div>
+                <AnimatedPage><CreateProduct /></AnimatedPage>
               </ProtectedRoute>
             }
           />
-
-
-
-          <Route path="/products/:id/edit-product" element={<EditProduct />} />
 
           <Route
             path="/products/:id"
             element={
               <ProtectedRoute>
-                <motion.div
-                  variants={pageVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                >
-                  <ProductDetailsPage />
-                </motion.div>
+                <AnimatedPage><ProductDetailsPage /></AnimatedPage>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/products/:id/edit-product"
+            element={
+              <ProtectedRoute>
+                <AnimatedPage><EditProduct /></AnimatedPage>
               </ProtectedRoute>
             }
           />
@@ -208,35 +165,45 @@ const App: React.FC = () => {
           <Route
             path="/dashboard/products"
             element={
-                  <DashboardProduct />
+              <ProtectedRoute>
+                <AnimatedPage><DashboardProduct /></AnimatedPage>
+              </ProtectedRoute>
             }
           />
 
           <Route
             path="/dashboard/users"
             element={
-                  <DashboardUsers />
+              <ProtectedRoute>
+                <AnimatedPage><DashboardUsers /></AnimatedPage>
+              </ProtectedRoute>
             }
           />
 
           <Route
             path="/cart"
             element={
-                  <CartPage />
+              <ProtectedRoute>
+                <AnimatedPage><CartPage /></AnimatedPage>
+              </ProtectedRoute>
             }
           />
 
           <Route
             path="/orders/my-orders"
             element={
-                  <MyOrderPage />
+              <ProtectedRoute>
+                <AnimatedPage><MyOrderPage /></AnimatedPage>
+              </ProtectedRoute>
             }
           />
 
           <Route
             path="/dashboard/orders"
             element={
-                  <DashboardOrders />
+              <ProtectedRoute>
+                <AnimatedPage><DashboardOrders /></AnimatedPage>
+              </ProtectedRoute>
             }
           />
 

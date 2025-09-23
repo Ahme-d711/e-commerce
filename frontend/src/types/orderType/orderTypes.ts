@@ -31,7 +31,7 @@ export interface ShippingAddress {
 
 export interface Order {
   _id: string;
-  user: string; // user id
+  user: string | { _id: string; name?: string; email?: string }; // can be populated
   orderItems: OrderItem[];
   totalPrice: number;
   status: OrderStatus;

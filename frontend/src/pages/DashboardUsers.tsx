@@ -36,6 +36,30 @@ const DashboardUsers: React.FC = () => {
         <h1 className="text-2xl font-semibold text-[var(--color-foreground)]">Dashboard / Users</h1>
       </div>
 
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {(() => {
+          const totalUsers = total;
+          const adminsOnPage = items.filter((u) => u.role === 'admin').length;
+          const regularOnPage = items.filter((u) => u.role !== 'admin').length;
+          const newLast30dOnPage = items.filter((u) => dayjs(u.createdAt).isAfter(dayjs().subtract(30, 'day'))).length;
+          const cards = [
+            { label: 'Total Users', value: totalUsers },
+            { label: 'Admins (page)', value: adminsOnPage },
+            { label: 'Users (page)', value: regularOnPage },
+            { label: 'New (30d, page)', value: newLast30dOnPage },
+          ];
+          return cards.map((card, idx) => (
+            <div key={idx} className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius-lg)] p-4">
+              <div className="text-sm text-[var(--color-muted-foreground)]">{card.label}</div>
+              <div className="mt-1 text-2xl font-semibold text-[var(--color-foreground)]">
+                {isLoading ? '—' : card.value}
+              </div>
+            </div>
+          ));
+        })()}
+      </div>
+
       {isLoading && (
         <div className="min-h-[40vh] flex items-center justify-center">
           <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="text-[var(--color-foreground)]">

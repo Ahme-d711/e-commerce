@@ -25,20 +25,29 @@ export default function Navbar() {
         </svg>
         <h1 className="text-3xl text-gray-500 flex gap-1">Elgedawy <span className="text-3xl text-rose-500">Market</span></h1>
       </Link>
-      {user && 
+      {user ? (
         <>
           <NavigationMenuDemo />
           <div className="flex gap-3 items-center min-w-72 justify-end">
             <div className="relative">
-            <Link to="/cart">
-              <ShoppingCart size={30} className="text-gray-300 cursor-pointer animate-bounce"/>
-            </Link>
-            <span className="absolute -top-5 text-red-300 rounded-full text-center animate-bounce  px-1.5 border-none -right-2.5">{cart?.items?.length || 0}</span>
+              <Link to="/cart">
+                <ShoppingCart size={30} className="text-gray-300 cursor-pointer animate-bounce"/>
+              </Link>
+              <span className="absolute -top-5 text-red-300 rounded-full text-center animate-bounce  px-1.5 border-none -right-2.5">{cart?.items?.length || 0}</span>
             </div>
-          <ImageLink />
+            <ImageLink />
           </div>
         </>
-      }
+      ) : (
+        <div className="flex gap-4 items-center ml-auto">
+          <Link to="/login" className="px-3 py-1.5 rounded-[var(--radius-sm)] border border-[var(--color-border)] text-[var(--color-foreground)] hover:bg-[var(--color-muted)]/20">
+            Sign In
+          </Link>
+          <Link to="/signup" className="px-3 py-1.5 rounded-[var(--radius-sm)] bg-[var(--color-primary)] text-[var(--color-primary-foreground)]">
+            Sign Up
+          </Link>
+        </div>
+      )}
     </div>
   )
 }
