@@ -40,19 +40,19 @@ const HomePage: React.FC = () => {
       <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-8">
         {/* Left Side - Text and Button */}
         <motion.div
-          className="flex flex-col justify-center space-y-6"
+          className="flex flex-col justify-center items-center space-y-6"
           variants={textContainerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.h1
-            className="text-5xl font-bold text-[var(--color-foreground)]"
+            className="text-3xl md:text-5xl font-bold text-[var(--color-foreground)]"
             variants={textItemVariants}
           >
             Elgedawy <span className="text-rose-400">Market</span>
           </motion.h1>
           <motion.p
-            className="text-lg text-[var(--color-muted-foreground)] max-w-md"
+            className="text-base text-center md:text-lg text-[var(--color-muted-foreground)] max-w-md"
             variants={textItemVariants}
           >
 			    Discover the latest technology products, including smartphones, headphones, smart watches, and more, with high quality and competitive prices.          </motion.p>
@@ -183,7 +183,7 @@ const HomePage: React.FC = () => {
           <motion.img
             src="https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Smart TV"
-            className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
+            className="w-40 h-40 object-contain hidden md:block rounded-[var(--radius-lg)] absolute"
             style={{ bottom: '5%', left: '60%' }}
             variants={imageVariants}
             animate="animate"
@@ -192,7 +192,7 @@ const HomePage: React.FC = () => {
           <motion.img
             src="https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Gaming Console"
-            className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
+            className="w-40 h-40 object-contain hidden md:block rounded-[var(--radius-lg)] absolute"
             style={{ top: '60%', left: '10%' }}
             variants={imageVariants}
             animate="animate"
@@ -201,7 +201,7 @@ const HomePage: React.FC = () => {
           <motion.img
             src="https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Router"
-            className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
+            className="w-40 h-40 hidden md:block object-contain rounded-[var(--radius-lg)] absolute"
             style={{ top: '30%', right: '15%' }}
             variants={imageVariants}
             animate="animate"

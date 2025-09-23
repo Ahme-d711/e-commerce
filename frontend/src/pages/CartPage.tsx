@@ -41,11 +41,11 @@ const CartPage: React.FC = () => {
           Continue Shopping
         </Link>
       </div>
-      <div className="flex gap-12">
+      <div className="flex gap-12 flex-col xl:flex-row">
         <div className="flex-2">
           <CartProducts />
         </div>
-        <div className="flex-1">
+        <div className="mx-auto">
           <OrderForm />
         </div>
       </div>

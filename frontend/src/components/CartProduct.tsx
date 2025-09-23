@@ -30,8 +30,8 @@ const CartProducts: React.FC = () => {
                     <li className='px-4'>Subtotal</li>
                     <li className='px-4'>Delete</li>
             </ul>
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden">
-            <div className="divide-y divide-[var(--color-border)]">
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-x-auto">
+            <div className="divide-y divide-[var(--color-border)] table-auto min-w-220">
                 {items.map((it, idx) => (
                 <motion.div key={idx} variants={rowVariants} className="p-4 gap-4">
                     <div className="col-span-6 flex items-center justify-between w-full gap-3">
@@ -44,7 +44,7 @@ const CartProducts: React.FC = () => {
                         />
                     )}
                     <div>
-                        <div className="text-[var(--color-foreground)] font-medium">
+                        <div className="text-[var(--color-foreground)] line-clamp-1 font-medium">
                         {typeof it.product === 'string' ? it.product : (it.product?.name ?? it.product?._id)}
                         </div>
                         <div className="text-[var(--color-muted-foreground)] text-sm">Unit Price: ${it.price.toFixed(2)}</div>

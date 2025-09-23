@@ -34,7 +34,7 @@ const ImageLink = () => {
 				<NavigationMenu.Item>
 					<NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-0.5 rounded text-[15px] font-medium leading-none text-violet11 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-violet7">
 						<Link to="/profile">
-							<Avatar.Root className="inline-flex size-[45px] select-none items-center justify-center overflow-hidden rounded-full bg-blackA1 align-middle">
+							<Avatar.Root className="inline-flex size-9 md:size-11 select-none items-center justify-center overflow-hidden rounded-full bg-blackA1 align-middle">
 								{user?.profilePic ?
 									<Avatar.Image
 									className="size-full rounded-[inherit] object-cover"

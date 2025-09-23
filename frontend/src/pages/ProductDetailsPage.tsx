@@ -109,7 +109,7 @@ const ProductDetailsPage: React.FC = () => {
               </span>
             </div>
             <div className="text-[var(--color-muted-foreground)]">In stock: {product.countInStock}</div>
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <motion.button
                 variants={buttonVariants}
                 whileHover="hover"
@@ -128,7 +128,7 @@ const ProductDetailsPage: React.FC = () => {
                       whileTap="tap"
                       className="btn cursor-pointer btn-primary bg-[var(--color-primary)] text-[var(--color-primary-foreground)] border-[var(--color-border)] rounded-[var(--radius-md)] px-6 py-3 flex items-center justify-center hover:bg-[var(--color-primary)]/90 focus:ring-2 focus:ring-[var(--color-ring)] transition duration-200"
                       >
-                    <Edit className="w-5 h-5 mr-2" /> Edit Product
+                    <Edit className="w-5 h-5 mr-2" /> Edit
                   </motion.button>
                   </Link>
                   <motion.button
@@ -138,7 +138,7 @@ const ProductDetailsPage: React.FC = () => {
                       onClick={() => handleDeletedProduct(product._id)}
                       className="btn cursor-pointer btn-primary bg-red-500 text-[var(--color-primary-foreground)] border-[var(--color-border)] rounded-[var(--radius-md)] px-6 py-3 flex items-center justify-center hover:bg-[var(--color-primary)]/90 focus:ring-2 focus:ring-[var(--color-ring)] transition duration-200"
                       >
-                    <DeleteIcon className="w-5 h-5 mr-2" /> Delete Product
+                    <DeleteIcon className="w-5 h-5 mr-2" /> Delete
                   </motion.button>
                 </div>
               }

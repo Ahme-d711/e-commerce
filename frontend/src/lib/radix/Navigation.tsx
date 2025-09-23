@@ -9,17 +9,17 @@ const NavigationMenuDemo = () => {
 	const { data: user } = useCurrentUserQuery();
 
 	return (
-		<NavigationMenu.Root className="relative w-screen z-10 flex justify-center">
+		<NavigationMenu.Root className="relative w-full z-10 flex justify-center">
 			<NavigationMenu.List className="center m-0 flex list-none rounded-md p-1 shadow-[0_2px_10px] shadow-blackA4">
 				<NavigationMenu.Item>
-					<NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-0.5 rounded px-3 py-2 text-[15px] font-medium leading-none text-violet11 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-violet7">
+					<NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-0.5 rounded px-2 py-1 md:px-3 md:py-2  text-xs md:text-base font-medium leading-none text-violet11 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-violet7">
 						Menu{" "}
 						<CaretDownIcon
 							className="relative top-px text-violet10 transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
 							aria-hidden
 						/>
 					</NavigationMenu.Trigger>
-					<NavigationMenu.Content className="absolute left-0 top-0 w-full data-[motion=from-end]:animate-enterFromRight data-[motion=from-start]:animate-enterFromLeft data-[motion=to-end]:animate-exitToRight data-[motion=to-start]:animate-exitToLeft sm:w-auto">
+					<NavigationMenu.Content className="absolute left-0 min-w-72F top-0 w-full data-[motion=from-end]:animate-enterFromRight data-[motion=from-start]:animate-enterFromLeft data-[motion=to-end]:animate-exitToRight data-[motion=to-start]:animate-exitToLeft sm:w-auto">
 						<ul className="one m-0 grid list-none gap-x-2.5 p-[22px] sm:w-[500px] sm:grid-cols-[0.75fr_1fr]">
 							<li className="row-span-3 grid">
 								<NavigationMenu.Link asChild>
@@ -62,7 +62,7 @@ const NavigationMenuDemo = () => {
 				</NavigationMenu.Item>
 				{user?.role === "admin" &&
 					<NavigationMenu.Item>
-						<NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-0.5 rounded px-3 py-2 text-[15px] font-medium leading-none text-violet11 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-violet7">
+						<NavigationMenu.Trigger className="group hidden  md:flex select-none items-center justify-between gap-0.5 rounded px-3 py-2 text-[15px] font-medium leading-none text-violet11 outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-violet7">
 							Dashboard{" "}
 							<CaretDownIcon
 								className="relative top-px text-violet10 transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
@@ -96,7 +96,7 @@ const NavigationMenuDemo = () => {
 
 				<NavigationMenu.Item>
 					<NavigationMenu.Link
-						className="block select-none rounded px-3 py-2 text-[15px] font-medium leading-none text-violet11 no-underline outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-violet7"
+						className="select-none rounded hidden md:block px-3 py-2 text-[15px] font-medium leading-none text-violet11 no-underline outline-none hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-violet7"
 						href="https://github.com/Ahme-d711"
 					>
 						Github
@@ -109,7 +109,7 @@ const NavigationMenuDemo = () => {
 			</NavigationMenu.List>
 
 			<div className="perspective-[2000px] absolute left-0 top-full flex w-full justify-center">
-				<NavigationMenu.Viewport className="relative mt-2.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-md bg-black/95 transition-[width,_height] duration-300 data-[state=closed]:animate-scaleOut data-[state=open]:animate-scaleIn sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+				<NavigationMenu.Viewport className="relative mt-2.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-md min-w-68 bg-black/95 transition-[width,_height] duration-300 data-[state=closed]:animate-scaleOut data-[state=open]:animate-scaleIn sm:w-[var(--radix-navigation-menu-viewport-width)]" />
 			</div>
 		</NavigationMenu.Root>
 	);
