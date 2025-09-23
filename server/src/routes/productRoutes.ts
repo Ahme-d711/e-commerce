@@ -12,13 +12,13 @@ const router = express.Router();
 router
 .route("/")
 .get(protect, getAllProducts)
-.post(protect, restrictedTo("admin"), upload.single("image"), validateRequest(createProductSchema), createProduct);
+.post(protect, upload.single("image"), validateRequest(createProductSchema), createProduct);
 
 // GET by ID + UPDATE + DELETE
 router
   .route("/:id")
   .get(protect, getProductByID)
-  .patch(protect, restrictedTo("admin"), upload.single("image"), updateProduct)
-  .delete(protect, restrictedTo("admin"), deleteProduct);
+  .patch(protect, upload.single("image"), updateProduct)
+  .delete(protect, deleteProduct);
 
 export default router;

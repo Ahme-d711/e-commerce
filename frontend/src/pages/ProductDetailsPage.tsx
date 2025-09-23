@@ -1,8 +1,8 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, easeOut, easeInOut } from 'framer-motion';
-import { ShoppingCart, ArrowLeft, Edit } from 'lucide-react';
-import { useGetProduct } from '../server/productService';
+import { ShoppingCart, ArrowLeft, Edit, DeleteIcon } from 'lucide-react';
+import { useDeleteProduct, useGetProduct } from '../server/productService';
 import { useAddCart } from '../server/cartService';
 import { useAuthStore } from '../store/AuthStore';
 
@@ -29,16 +29,17 @@ const thumbnailVariants = {
 };
 
 const ProductDetailsPage: React.FC = () => {
+  const navigate = useNavigate()
   const { id } = useParams();
   const { data: product, isLoading, error } = useGetProduct(id);
   const { user } = useAuthStore();
   const addCart = useAddCart()
+  const deleteMutation = useDeleteProduct();
 
-  console.log('====================================');
-  console.log(product);
-  console.log(product?.name);
-  console.log('====================================');
-
+  const handleDeletedProduct = (id: string) => {
+    deleteMutation.mutate(id)
+    navigate("/products", {replace: true})
+  }
 
   if (isLoading) {
     return (
@@ -119,17 +120,28 @@ const ProductDetailsPage: React.FC = () => {
                 <ShoppingCart className="w-5 h-5 mr-2" /> Add to cart
               </motion.button>
               {product.userId && user?._id === product?.userId &&
-              <Link to={`/products/${product._id}/edit-product`}>
-                <motion.button
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                  className="btn cursor-pointer btn-primary bg-[var(--color-primary)] text-[var(--color-primary-foreground)] border-[var(--color-border)] rounded-[var(--radius-md)] px-6 py-3 flex items-center justify-center hover:bg-[var(--color-primary)]/90 focus:ring-2 focus:ring-[var(--color-ring)] transition duration-200"
-                  >
-                  <Edit className="w-5 h-5 mr-2" /> Edit Product
-                </motion.button>
-                </Link>
-                  }
+                <div className='flex gap-2'>
+                  <Link to={`/products/${product._id}/edit-product`}>
+                    <motion.button
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      className="btn cursor-pointer btn-primary bg-[var(--color-primary)] text-[var(--color-primary-foreground)] border-[var(--color-border)] rounded-[var(--radius-md)] px-6 py-3 flex items-center justify-center hover:bg-[var(--color-primary)]/90 focus:ring-2 focus:ring-[var(--color-ring)] transition duration-200"
+                      >
+                    <Edit className="w-5 h-5 mr-2" /> Edit Product
+                  </motion.button>
+                  </Link>
+                  <motion.button
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      onClick={() => handleDeletedProduct(product._id)}
+                      className="btn cursor-pointer btn-primary bg-red-500 text-[var(--color-primary-foreground)] border-[var(--color-border)] rounded-[var(--radius-md)] px-6 py-3 flex items-center justify-center hover:bg-[var(--color-primary)]/90 focus:ring-2 focus:ring-[var(--color-ring)] transition duration-200"
+                      >
+                    <DeleteIcon className="w-5 h-5 mr-2" /> Delete Product
+                  </motion.button>
+                </div>
+              }
               </div>
           </div>
 

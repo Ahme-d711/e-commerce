@@ -25,7 +25,7 @@ const CartProducts: React.FC = () => {
       ) : (
         <div>
             <ul className="flex items-center text-sm justify-between py-3 px-4">
-                    <li className='px-4 w-1/6'>Product</li>
+                    <li className='px-4 w-2/6'>Product</li>
                     <li className='px-4'>Quantity</li>
                     <li className='px-4'>Subtotal</li>
                     <li className='px-4'>Delete</li>
@@ -35,7 +35,7 @@ const CartProducts: React.FC = () => {
                 {items.map((it, idx) => (
                 <motion.div key={idx} variants={rowVariants} className="p-4 gap-4">
                     <div className="col-span-6 flex items-center justify-between w-full gap-3">
-                    <div className="flex items-center gap-3">
+                    <div className="flex w-2/6 items-center gap-3">
                     {typeof it.product !== 'string' && it.product?.imageUrl && (
                         <img
                         src={it.product.imageUrl}

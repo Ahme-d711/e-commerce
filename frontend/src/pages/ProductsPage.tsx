@@ -36,12 +36,6 @@ const ProductsPage: React.FC = () => {
   const canPrev = page > 1;
   const canNext = page < totalPages;
 
-  console.log('====================================');
-  console.log(totalPages);
-  console.log('====================================');
-  console.log(canNext);
-  console.log('====================================');
-  console.log('====================================');
 
   const useCartMutation = useAddCart()
 
@@ -69,8 +63,12 @@ const ProductsPage: React.FC = () => {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-semibold mb-6 text-[var(--color-foreground)]">Products</h1>
-
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-semibold text-[var(--color-foreground)]">Products</h1>
+        <Link to="/products/create-product" className="btn btn-sm bg-[var(--color-primary)] text-[var(--color-primary-foreground)] rounded-[var(--radius-md)] px-3 py-2">
+          Create Product
+        </Link>
+      </div>
       <motion.div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" variants={gridVariants} initial="hidden" animate="visible">
         {items.map((p) => (
           <motion.div key={p._id} variants={cardVariants} className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden hover:shadow-md transition-shadow">
