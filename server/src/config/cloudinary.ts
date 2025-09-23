@@ -1,8 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
 import { UploadApiResponse, DeleteApiResponse } from "cloudinary";
-import streamifier from "streamifier";
-import { Express } from "express";
+import sharp from "sharp";
 
 dotenv.config();
 
@@ -12,29 +11,40 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadToCloudinary = (
+export const uploadToCloudinary = async (
   file: Express.Multer.File,
   folder = "products"
 ): Promise<UploadApiResponse> => {
-  return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      {
-        folder,
-        resource_type: "auto",
-        upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET || "products-preset", // Use environment variable or default
-      },
-      (error, result) => {
-        if (error) {
-          console.error("Cloudinary upload error:", error);
-          reject(error);
-        } else {
-          resolve(result as UploadApiResponse);
-        }
-      }
-    );
+  try {
+    const resizedBuffer = await sharp(file.buffer)
+      .resize(800, 800, { fit: "inside" })
+      .jpeg({ quality: 80 })
+      .toBuffer();
 
-    streamifier.createReadStream(file.buffer).pipe(stream);
-  });
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder,
+          resource_type: "image",
+          upload_preset:
+            process.env.CLOUDINARY_UPLOAD_PRESET || "products-preset",
+        },
+        (error, result) => {
+          if (error) {
+            console.error("Cloudinary upload error:", error);
+            reject(error);
+          } else {
+            resolve(result as UploadApiResponse);
+          }
+        }
+      );
+
+      stream.end(resizedBuffer);
+    });
+  } catch (err) {
+    console.error("Image processing error:", err);
+    throw err;
+  }
 };
 
 export const deleteFromCloudinary = (

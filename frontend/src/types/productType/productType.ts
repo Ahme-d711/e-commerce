@@ -20,11 +20,11 @@ export interface Product {
   };
 
   export interface ProductRequest {
-    name?: string,
+    name: string,
     description?: string,
-    price?: number,
-    category?: string,
-    countInStock?: number,
-    image?: File, 
+    price: number,
+    category: string,
+    countInStock: number,
+    image: File, 
   }
   

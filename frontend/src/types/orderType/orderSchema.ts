@@ -29,8 +29,6 @@ export const createOrderSchema = z.object({
   orderItems: z.array(orderItemSchema).min(1, 'At least one item is required').optional(),
   paymentMethod: paymentMethodSchema.optional(),
   shippingAddress: shippingAddressSchema.optional(),
-  taxPrice: z.string().optional(),
-  shippingPrice: z.string().optional(),
 });
 
 export const updateOrderSchema = z.object({

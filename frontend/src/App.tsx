@@ -17,8 +17,8 @@ import EditProduct from './pages/EditProduct';
 import DashboardProduct from './pages/DashboardProduct';
 import DashboardUsers from './components/DashboardUsers';
 import CartPage from './pages/CartPage';
+import DashboardOrders from './pages/DashboardOrders';
 import MyOrderPage from './pages/MyOrderPage';
-// import DashboardOrders from './pages/DashboardOrders';
 
 // Animation Variants
 const pageVariants = {
@@ -232,13 +232,13 @@ const App: React.FC = () => {
                   <MyOrderPage />
             }
           />
-{/* 
+
           <Route
             path="/dashboard/orders"
             element={
                   <DashboardOrders />
             }
-          /> */}
+          />
 
           <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>

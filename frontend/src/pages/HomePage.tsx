@@ -207,15 +207,6 @@ const HomePage: React.FC = () => {
             animate="animate"
             transition={{ delay: 3.0 }}
           />          
-          <motion.img
-          src=""
-          alt="Router"
-          className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-          style={{ top: '40%', right: '35%' }}
-          variants={imageVariants}
-          animate="animate"
-          transition={{ delay: 3.0 }}
-        />
         </div>
       </div>
     </div>

@@ -56,8 +56,6 @@ export interface OrdersResponse {
 export interface CreateOrderRequest {
   orderItems: Array<{ product: string; quantity: number }>;
   paymentMethod?: PaymentMethod;
-  shippingPrice?: number,
-  taxPrice?: number
   shippingAddress?: ShippingAddress;
 }
 

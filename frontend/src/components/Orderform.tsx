@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion, easeOut } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { createOrderSchema, type CreateOrderInput, paymentMethodSchema } from '../types/orderType/orderSchema';
+import { createOrderSchema, type CreateOrderInput } from '../types/orderType/orderSchema';
 import { useCreateOrder } from '../server/orderService';
 import { useCartStore } from '../store/CartStore';
 import { useClearCart } from '../server/cartService';
@@ -35,8 +35,6 @@ const OrderForm: React.FC = () => {
     resolver: zodResolver(createOrderSchema),
     defaultValues: {
       paymentMethod: 'cod',
-      taxPrice: "",
-      shippingPrice: "",
       shippingAddress: {
         address: '',
         city: '',
@@ -61,8 +59,6 @@ const OrderForm: React.FC = () => {
       orderItems,
       paymentMethod: data.paymentMethod,
       shippingAddress: data.shippingAddress,
-      taxPrice: data.taxPrice ? Number(data.taxPrice) : 0,
-      shippingPrice: data.shippingPrice ? Number(data.shippingPrice) : 0,
     };
 
     createMutation.mutate(orderData, {
@@ -142,52 +138,18 @@ const OrderForm: React.FC = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block mb-1 text-sm text-[var(--color-foreground)]">Tax Price</label>
-          <input 
-            type="number" 
-            step="0.01" 
-            className="input py-1.5 px-4 input-bordered w-full bg-[var(--color-input)] border-[var(--color-border)] rounded-[var(--radius-md)]" 
-            {...register("taxPrice")} 
-          />
-          {errors.taxPrice && (
-            <p className="text-[var(--color-destructive)] text-sm mt-1">
-              {errors.taxPrice.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label className="block mb-1 text-sm text-[var(--color-foreground)]">Shipping Price</label>
-          <input 
-            type="number" 
-            step="0.01" 
-            className="input py-1.5 px-4 input-bordered w-full bg-[var(--color-input)] border-[var(--color-border)] rounded-[var(--radius-md)]" 
-            {...register('shippingPrice')} 
-          />
-          {errors.shippingPrice && (
-            <p className="text-[var(--color-destructive)] text-sm mt-1">
-              {errors.shippingPrice.message}
-            </p>
-          )}
-        </div>
-      </div>
-
       <div>
         <label className="block mb-1 text-sm text-[var(--color-foreground)]">Payment Method</label>
         <select 
           className="select py-1.5 px-4 select-bordered w-full bg-[var(--color-input)] border-[var(--color-border)] rounded-[var(--radius-md)]" 
           {...register('paymentMethod')}
         >
-          {paymentMethodSchema.options.map((opt) => (
             <option 
               className='bg-[var(--color-card)]/80 rounded-2xl' 
-              key={opt} 
-              value={opt}
+              value="paypal"
             >
-              {opt.toUpperCase()}
+              PAYPAL
             </option>
-          ))}
         </select>
         {errors.paymentMethod && (
           <p className="text-[var(--color-destructive)] text-sm mt-1">
