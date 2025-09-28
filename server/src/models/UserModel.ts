@@ -13,32 +13,34 @@ export interface IUser extends Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
-const userSchema = new Schema<IUser>({
-  name: { type: String, required: true, trim: true },
-  phone: {
-    type: String,
-    required: true,
-    default: ""
-  },
-  email: { type: String, required: true, unique: true, lowercase: true },
-  password: { type: String, required: true, minlength: 8, select: false },
-  confirmPassword: {
-    type: String,
-    required: [true, "Please confirm your password"],
-    select: false,
-    validate: {
-      validator: function (this: IUser, el: string) {
-        return el === this.password;
-      },
-      message: "Passwords are not the same!",
+const userSchema = new Schema<IUser>(
+  {
+    name: { type: String, required: true, trim: true },
+    phone: {
+      type: String,
+      required: true,
+      default: "",
     },
+    email: { type: String, required: true, unique: true, lowercase: true },
+    password: { type: String, required: true, minlength: 8, select: false },
+    confirmPassword: {
+      type: String,
+      required: [true, "Please confirm your password"],
+      select: false,
+      validate: {
+        validator: function (this: IUser, el: string) {
+          return el === this.password;
+        },
+        message: "Passwords are not the same!",
+      },
+    },
+    role: { type: String, enum: ["user", "admin"], default: "user" },
+    profilePic: { type: String, default: "" },
   },
-  role: { type: String, enum: ["user", "admin"], default: "user" },
-  profilePic: { type: String, default: "" },
-},
-{
-  timestamps: true
-});
+  {
+    timestamps: true,
+  }
+);
 
 // 🔒 hash password before saving
 userSchema.pre<IUser>("save", async function (next) {

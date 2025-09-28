@@ -7,10 +7,14 @@ interface JwtPayload {
   id: string;
 }
 
-export const protect = async (req: Request, res: Response, next: NextFunction) => {
+export const protect = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     let token;
-    
+
     if (req.cookies?.jwt) {
       token = req.cookies.jwt;
     }

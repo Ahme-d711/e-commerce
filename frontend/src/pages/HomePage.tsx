@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion, easeOut, easeInOut } from 'framer-motion';
-import { ShoppingCart } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion, easeOut, easeInOut } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 
 // Animation Variants
 const textContainerVariants = {
@@ -19,7 +19,7 @@ const textItemVariants = {
 };
 
 const buttonVariants = {
-  hover: { scale: 1.05, boxShadow: '0 0 15px var(--color-ring)' },
+  hover: { scale: 1.05, boxShadow: "0 0 15px var(--color-ring)" },
   tap: { scale: 0.95 },
 };
 
@@ -55,7 +55,10 @@ const HomePage: React.FC = () => {
             className="text-base text-center md:text-lg text-[var(--color-muted-foreground)] max-w-md"
             variants={textItemVariants}
           >
-			    Discover the latest technology products, including smartphones, headphones, smart watches, and more, with high quality and competitive prices.          </motion.p>
+            Discover the latest technology products, including smartphones,
+            headphones, smart watches, and more, with high quality and
+            competitive prices.{" "}
+          </motion.p>
           <motion.div variants={textItemVariants}>
             <Link to="/products">
               <motion.button
@@ -77,7 +80,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Smartphone"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '5%', left: '10%' }}
+            style={{ top: "5%", left: "10%" }}
             variants={imageVariants}
             animate="animate"
           />
@@ -85,7 +88,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Headphones"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '5%', right: '10%' }}
+            style={{ top: "5%", right: "10%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 0.2 }}
@@ -94,7 +97,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/205926/pexels-photo-205926.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Smartwatch"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ bottom: '5%', left: '15%' }}
+            style={{ bottom: "5%", left: "15%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 0.4 }}
@@ -103,7 +106,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/7974/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300"
             alt="Laptop"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '30%', left: '5%' }}
+            style={{ top: "30%", left: "5%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 0.6 }}
@@ -112,7 +115,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/5054213/pexels-photo-5054213.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Bluetooth Earbuds"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ bottom: '25%', right: '15%' }}
+            style={{ bottom: "25%", right: "15%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 0.8 }}
@@ -121,7 +124,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Camera"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '15%', left: '30%' }}
+            style={{ top: "15%", left: "30%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 1.0 }}
@@ -130,7 +133,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/211122/pexels-photo-211122.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Keyboard"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ bottom: '10%', right: '5%' }}
+            style={{ bottom: "10%", right: "5%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 1.2 }}
@@ -139,7 +142,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/392018/pexels-photo-392018.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Mouse"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '40%', right: '20%' }}
+            style={{ top: "40%", right: "20%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 1.4 }}
@@ -148,7 +151,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Tablet"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '10%', left: '50%' }}
+            style={{ top: "10%", left: "50%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 1.6 }}
@@ -157,7 +160,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/5077039/pexels-photo-5077039.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Smart Speaker"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ bottom: '20%', left: '40%' }}
+            style={{ bottom: "20%", left: "40%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 1.8 }}
@@ -166,7 +169,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Monitor"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '50%', left: '25%' }}
+            style={{ top: "50%", left: "25%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 2.0 }}
@@ -175,7 +178,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Drone"
             className="w-40 h-40 object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '25%', right: '40%' }}
+            style={{ top: "25%", right: "40%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 2.4 }}
@@ -184,7 +187,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Smart TV"
             className="w-40 h-40 object-contain hidden md:block rounded-[var(--radius-lg)] absolute"
-            style={{ bottom: '5%', left: '60%' }}
+            style={{ bottom: "5%", left: "60%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 2.6 }}
@@ -193,7 +196,7 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Gaming Console"
             className="w-40 h-40 object-contain hidden md:block rounded-[var(--radius-lg)] absolute"
-            style={{ top: '60%', left: '10%' }}
+            style={{ top: "60%", left: "10%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 2.8 }}
@@ -202,11 +205,11 @@ const HomePage: React.FC = () => {
             src="https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&w=300"
             alt="Router"
             className="w-40 h-40 hidden md:block object-contain rounded-[var(--radius-lg)] absolute"
-            style={{ top: '30%', right: '15%' }}
+            style={{ top: "30%", right: "15%" }}
             variants={imageVariants}
             animate="animate"
             transition={{ delay: 3.0 }}
-          />          
+          />
         </div>
       </div>
     </div>

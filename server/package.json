@@ -2,7 +2,7 @@
   "name": "server",
   "private": true,
   "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/bun": "latest",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
@@ -20,7 +20,7 @@
     "typescript": "^5.9.2"
   },
   "scripts": {
-    "dev": "bun --watch src/server.ts",
+    "dev": "ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "eslint . --ext .ts"
