@@ -63,9 +63,6 @@ class QueryFeatures<T extends Document> {
     const page = Number(this.queryString.page) || 1;
     const limit = Number(this.queryString.limit) || 10;
 
-    console.log(limit);
-    
-
     if (page < 1 || limit < 1) {
       throw new Error("Page and limit must be positive numbers");
     }

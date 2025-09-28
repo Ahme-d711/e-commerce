@@ -106,16 +106,10 @@ export const updateProduct = catchAsync(
         const product = await ProductModel.findById(id);
         if (!product) return next(new AppError("Product not found", 404));
 
-        // حذف الصورة القديمة لو موجودة
         if (product.imagePublicId) {
           await deleteFromCloudinary(product.imagePublicId);
         }
 
-        console.log("====================================");
-        console.log(cloudinary.config);
-        console.log("====================================");
-
-        // رفع الصورة الجديدة
         const result = await uploadToCloudinary(req.file, "users");
         updateData.imageUrl = result.secure_url;
         updateData.imagePublicId = result.public_id;

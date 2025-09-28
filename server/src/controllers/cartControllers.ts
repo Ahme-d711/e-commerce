@@ -70,9 +70,6 @@ export const updateCartItem = catchAsync(async (req: Request, res: Response, nex
   const cart = await CartModel.findOne({ user: req.user._id });
   if (!cart) return next(new AppError("Cart not found", 404));
 
-  console.log(cart);
-  
-
   const item = cart.items.find((i) => i.product.toString() === productId);
   if (!item) return next(new AppError("Item not in cart", 404));
 

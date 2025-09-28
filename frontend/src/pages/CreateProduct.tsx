@@ -55,8 +55,6 @@ const CreateProduct: React.FC = () => {
       formData.append("image", data.image[0]);
     }
     
-    console.log(formData);
-    
     // Cast to any to align with current mutation typing
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createMutation.mutate(formData as any, {

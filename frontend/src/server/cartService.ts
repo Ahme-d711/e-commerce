@@ -19,7 +19,6 @@ export const getMyCart = async(): Promise<ICartF> => {
 
 export const updateCartItem = async(productId: string, quantity: number): Promise<ICartF> => {
     const res = await api.patch(`/cart/item/${productId}`, { quantity });
-    console.log(res.data.data.cart);
     
     return res.data.data.cart;
 }
